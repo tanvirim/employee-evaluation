@@ -2,21 +2,29 @@ const userModel = require("../models/userModel");
 const bcrypt = require('bcrypt');
 
 //Login callback
-
 const loginController = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password ,role} = req.body;
     const user = await userModel.findOne({ email });
-
+     console.log(user)
+     console.log(email)
+     console.log(password)
+    // Check if the user exists
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: "User Not Found",
+        message: "User Not Found,valid Role required",
       });
     }
-
+    //check if role is correct
+    if(user.role !== role){
+      return res.status(404).json({
+        success: false,
+        message: "User Not Found ,valid Role required",
+      });
+    }
     // Compare passwords
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password); 
     if (!isPasswordValid) {
       return res.status(401).json({
         success: false,

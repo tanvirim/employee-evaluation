@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import useLogin from '../hooks/useLogin'
-
+import useLogin from '../hooks/useLogin';
 
 function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+    role: 'employee', // Default role
   });
 
-  const { isLoading, error, isLoggedIn, loginUser ,user } = useLogin();
+  const { isLoading, error, isLoggedIn, loginUser, } = useLogin();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,9 +17,7 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    loginUser(formData); // Use the loginUser function from the custom hook
-    // localStorage.setItem("user", JSON.stringify({...user, password:""}))
-    console.log("user p",user)
+    loginUser(formData);
   };
 
   if (isLoggedIn) {
@@ -52,6 +50,19 @@ function Login() {
             onChange={handleChange}
             required
           />
+        </div>
+        <div className="form-group">
+          <label htmlFor="role">Role</label>
+          <select
+            id="role"
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+          >
+            <option value="employee">Employee</option>
+            <option value="admin">Admin</option>
+            <option value="evaluator">Evaluator</option>
+          </select>
         </div>
         <button type="submit" disabled={isLoading}>
           {isLoading ? 'Logging in...' : 'Login'}

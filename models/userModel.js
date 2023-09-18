@@ -17,7 +17,8 @@ const userSchema =new mongoose.Schema({
     role:{
         type: String,
         required:[true , "role is required and should be unique"],
-        enum:['user' , 'admin','evaluator'] ,
+        enum:['employee' , 'admin','evaluator'] ,
+        default:'employee'
         
     }
 } , { timestamps:true})
