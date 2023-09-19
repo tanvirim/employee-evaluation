@@ -1,8 +1,8 @@
 import { useEffect, useState} from 'react';
 
-
+import styled from "styled-components";
 import useLogin from '../hooks/useLogin';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link } from 'react-router-dom';
 
 function Login() {
 const user = JSON.parse(localStorage.getItem("data"))
@@ -12,7 +12,7 @@ const user = JSON.parse(localStorage.getItem("data"))
     password: '',
   });
 
-  const { isLoading, error, isLoggedIn, loginUser, } = useLogin();
+  const { isLoading, isLoggedIn, loginUser, } = useLogin();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,12 +42,12 @@ const user = JSON.parse(localStorage.getItem("data"))
  
 
   return (
-    <div>
-      <h2>Login</h2>
+    <Container>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="email">Email</label>
+        <h1>Login Here</h1>
           <input
+          placeholder='E-mail'
             type="email"
             id="email"
             name="email"
@@ -57,8 +57,9 @@ const user = JSON.parse(localStorage.getItem("data"))
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password</label>
+        
           <input
+          placeholder='Password'
             type="password"
             id="password"
             name="password"
@@ -71,12 +72,75 @@ const user = JSON.parse(localStorage.getItem("data"))
         <button type="submit" disabled={isLoading}>
           {isLoading ? 'Logging in...' : 'Login'}
         </button>
-        <div>Dont have an account? <a href="/register">Register</a></div>
-        {error && <p className="error-message">{error}</p>}
-        
+        <span>
+            Dont have an account ? <Link to="/register">Create One.</Link>
+          </span>
       </form>
-    </div>
+    </Container>
   );
 }
 
 export default Login;
+
+const Container = styled("div")`
+ height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+  background-color: #131324;
+  h1 {
+    font-size:30px ;
+      color: #f7eeee;
+      padding: 10px;
+      
+    }
+  form {
+    color:white;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-color: #00000076;
+    border-radius: 2rem;
+    padding: 5rem;
+  }
+  input {
+    background-color: transparent;
+    padding: 1rem;
+    border: 0.1rem solid #4e0eff;
+    border-radius: 0.4rem;
+    color: white;
+    width: 100%;
+    font-size: 1rem;
+    &:focus {
+      border: 0.1rem solid #997af0;
+      outline: none;
+    }
+  }
+  button {
+    background-color: #4e0eff;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 0.4rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+    &:hover {
+      background-color: #4e0eff;
+    }
+  }
+  span {
+    color: white;
+    text-transform: uppercase;
+    a {
+      color: #4e0eff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  }
+
+`;
