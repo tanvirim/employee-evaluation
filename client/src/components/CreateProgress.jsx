@@ -1,18 +1,15 @@
-import  { useState } from 'react';
-import useCreateProgress from '../hooks/useAddProgress';
-
-
+import { useState } from "react";
+import useCreateProgress from "../hooks/useAddProgress";
 function CreateProgressComponent() {
-  
   const { isLoading, success, createProgressEntry } = useCreateProgress();
-  const {_id} = JSON.parse(localStorage.getItem('data'))
-  console.log("userId" ,_id)
   
+  const { _id } = JSON.parse(localStorage.getItem("data"));
+
   const [newEntry, setNewEntry] = useState({
-    projectName: '',
-    projectContribution: '',
+    projectName: "",
+    projectContribution: "",
     progressPercentage: 0,
-    user:_id, // Provide a user ID
+    user: _id, // Provide a user ID
   });
 
   const handleInputChange = (e) => {
@@ -26,7 +23,7 @@ function CreateProgressComponent() {
   const handleSubmit = (e) => {
     e.preventDefault();
     createProgressEntry(newEntry);
-    console.log(newEntry)
+    
   };
 
   return (
@@ -71,7 +68,7 @@ function CreateProgressComponent() {
           </div>
 
           <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Creating...' : 'Create Progress Entry'}
+            {isLoading ? "Creating..." : "Create Progress Entry"}
           </button>
         </form>
       )}

@@ -1,19 +1,15 @@
-import { useState, useCallback } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function useCreateProgress() {
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const createProgressEntry = useCallback(async (newEntry) => {
+  const createProgressEntry = async (newEntry) => {
     try {
       setIsLoading(true);
-      const response = await fetch('http://localhost:3000/api/v1/employee/progress', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newEntry),
-      });
+
+      const response = await axios.post('http://localhost:3000/api/v1/employee/progress', newEntry);
 
       if (response.status === 201) {
         setSuccess(true); // Set success indicator to true
@@ -25,7 +21,13 @@ function useCreateProgress() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  };
+
+  useEffect(() => {
+    if (success) {
+      // You can trigger any additional logic here after success
+    }
+  }, [success]);
 
   return {
     isLoading,

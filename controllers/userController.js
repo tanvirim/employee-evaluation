@@ -1,14 +1,12 @@
 const userModel = require("../models/userModel");
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 //Login callback
 const loginController = async (req, res) => {
   try {
-    const { email, password ,role} = req.body;
+    const { email, password } = req.body;
     const user = await userModel.findOne({ email });
-     console.log(user)
-     console.log(email)
-     console.log(password)
     // Check if the user exists
     if (!user) {
       return res.status(404).json({
@@ -16,13 +14,7 @@ const loginController = async (req, res) => {
         message: "User Not Found,valid Role required",
       });
     }
-    //check if role is correct
-    if(user.role !== role){
-      return res.status(404).json({
-        success: false,
-        message: "User Not Found ,valid Role required",
-      });
-    }
+
     // Compare passwords
     const isPasswordValid = await bcrypt.compare(password, user.password); 
     if (!isPasswordValid) {
@@ -31,10 +23,14 @@ const loginController = async (req, res) => {
         message: "Incorrect Password",
       });
     }
-
+ //authenticate user
+ const payload = {id:user._id ,name:user.name,email:user.email,role:user.role}
+ // Sign the token with the secret key and expiration time
+ const token = jwt.sign(payload, "secretKey"); 
+ 
     return res.status(200).json({
       success: true,
-      user,
+      token,
     });
   } catch (error) {
     return res.status(500).json({

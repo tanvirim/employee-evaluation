@@ -1,13 +1,17 @@
+
+import { useEffect } from "react";
 import useFindProgresdById from "../hooks/useFindProgress";
-
-
-
+import useCreateProgress from "../hooks/useAddProgress";
 
 function ShowProgress() {
-    const {_id} = JSON.parse(localStorage.getItem('data'))
+  const { id } = JSON.parse(localStorage.getItem("data"));
+  
+  const { data, isLoading, error } = useFindProgresdById(id);
+  const{success}=useCreateProgress()
+  console.log("success from showprogress" ,success)
 
-  const { data, isLoading, error } = useFindProgresdById(_id);
-
+  useEffect(() => {
+  }, [success]);
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -18,9 +22,8 @@ function ShowProgress() {
 
   return (
     <div>
-      {console.log(" data is" , data)}
       {data && (
-          <div>
+        <div>
           <h1>Project Table</h1>
           <table>
             <thead>

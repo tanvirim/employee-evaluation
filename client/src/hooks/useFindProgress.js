@@ -9,7 +9,6 @@ function useFindProgresdById(id) {
   useEffect(() => {
     // Define the URL with the provided ID
     const apiUrl = `http://localhost:3000/api/v1/employee/progress/${id}`;
- console.log("id",id)
     // Fetch data from the API using Axios
     axios
       .get(apiUrl)

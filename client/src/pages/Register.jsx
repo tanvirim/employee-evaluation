@@ -1,11 +1,15 @@
 import  { useState } from 'react';
 import useRegister from '../hooks/useRegister';
+import { useNavigate } from 'react-router-dom';
+
 
 function Register() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
+    role: '',
   });
 
   const { isLoading, error, success, registerUser } = useRegister();
@@ -18,6 +22,8 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     registerUser(formData);
+
+    console.log("data" ,formData)
   };
 
   return (
@@ -57,11 +63,27 @@ function Register() {
             required
           />
         </div>
+        <div className="form-group">
+          <label htmlFor="role">Role</label>
+          <select
+            id="role"
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+          >
+            <option value="employee">Employee</option>
+            <option value="admin">Admin</option>
+            <option value="evaluator">Evaluator</option>
+          </select>
+        </div>
         <button type="submit" disabled={isLoading}>
           Register
         </button>
+        <div>Already have an account? <a href="/login">Login</a></div>
         {isLoading && <p>Loading...</p>}
-        {success && <p>Registration successful!</p>}
+        {success && 
+        navigate('/login')
+        }
         {error && <p>Error: {error}</p>}
       </form>
     </div>

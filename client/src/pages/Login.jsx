@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState} from 'react';
+
+
 import useLogin from '../hooks/useLogin';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+const user = JSON.parse(localStorage.getItem("data"))
+  const navigate = useNavigate() ;
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    role: 'employee', // Default role
   });
 
   const { isLoading, error, isLoggedIn, loginUser, } = useLogin();
@@ -18,12 +22,24 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     loginUser(formData);
-  };
 
-  if (isLoggedIn) {
-    // Redirect the user to the dashboard or another authenticated page
-    // return <Redirect to="/dashboard" />;
+
   }
+    useEffect(() => {
+      const navigateBasedOnRole = () => {
+        if (isLoggedIn && user.role === "admin") {
+          navigate("/admin-dashboard");
+        } else if (isLoggedIn && user.role === "evaluator") {
+          navigate("/evaluator-dashboard");
+        } else if (isLoggedIn) {
+          navigate("/employee-dashboard");
+        }
+      };
+    
+      navigateBasedOnRole();
+    },[user,isLoggedIn])
+ 
+ 
 
   return (
     <div>
@@ -51,24 +67,13 @@ function Login() {
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="role">Role</label>
-          <select
-            id="role"
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-          >
-            <option value="employee">Employee</option>
-            <option value="admin">Admin</option>
-            <option value="evaluator">Evaluator</option>
-          </select>
-        </div>
+
         <button type="submit" disabled={isLoading}>
           {isLoading ? 'Logging in...' : 'Login'}
         </button>
+        <div>Dont have an account? <a href="/register">Register</a></div>
         {error && <p className="error-message">{error}</p>}
-        {isLoggedIn && <p>You are logged in!</p>}
+        
       </form>
     </div>
   );
