@@ -4,7 +4,7 @@ import useFindProgresdById from "../hooks/useFindProgress";
 import useCreateProgress from "../hooks/useAddProgress";
 
 function ShowProgress() {
-  const { id } = JSON.parse(localStorage.getItem("data"));
+  const { id ,name } = JSON.parse(localStorage.getItem("data"));
   
   const { data, isLoading, error } = useFindProgresdById(id);
   const{success}=useCreateProgress()
@@ -31,7 +31,8 @@ function ShowProgress() {
                 <th>Project Name</th>
                 <th>Project Contribution</th>
                 <th>Progress Percentage</th>
-                <th>User</th>
+                <th>Employee Name</th>
+              
               </tr>
             </thead>
             <tbody>
@@ -40,7 +41,8 @@ function ShowProgress() {
                   <td>{project.projectName}</td>
                   <td>{project.projectContribution}</td>
                   <td>{project.progressPercentage}%</td>
-                  <td>{project.user}</td>
+                  <td>{name}</td>
+                  
                 </tr>
               ))}
             </tbody>

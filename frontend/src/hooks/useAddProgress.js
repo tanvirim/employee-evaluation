@@ -9,7 +9,7 @@ function useCreateProgress() {
     try {
       setIsLoading(true);
 
-      const response = await axios.post('http://localhost:3000/api/v1/employee/progress', newEntry);
+      const response = await axios.post('http://localhost:8080/api/v1/employee/progress', newEntry);
 
       if (response.status === 201) {
         setSuccess(true); // Set success indicator to true

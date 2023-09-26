@@ -13,7 +13,7 @@ function useLogin() {
 
     try {
       // Make an API request to your login endpoint with Axios
-      const {data} = await axios.post('http://localhost:3000/api/v1/users/login', formData);
+      const {data} = await axios.post('http://localhost:8080/api/v1/users/login', formData);
       
       const decoded = jwt_decode(data.token);
        console.log(decoded)

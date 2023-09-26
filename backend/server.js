@@ -37,6 +37,6 @@ app.use('/api/v1/employee', progressRoute)
 // })
 
 //port  
-const port = 3000 || process.env.PORT 
+const port = 8080 || process.env.PORT 
 
 app.listen(port, ()=> console.log("server running on port "+ port ) ) 

@@ -3,13 +3,13 @@ import useCreateProgress from "../hooks/useAddProgress";
 function CreateProgressComponent() {
   const { isLoading, success, createProgressEntry } = useCreateProgress();
   
-  const { _id } = JSON.parse(localStorage.getItem("data"));
+  const { id} = JSON.parse(localStorage.getItem("data"));
 
   const [newEntry, setNewEntry] = useState({
     projectName: "",
     projectContribution: "",
     progressPercentage: 0,
-    user: _id, // Provide a user ID
+    user: id, // Provide a user ID
   });
 
   const handleInputChange = (e) => {

@@ -26,6 +26,7 @@ const user = JSON.parse(localStorage.getItem("data"))
 
   }
     useEffect(() => {
+      
       const navigateBasedOnRole = () => {
         if (isLoggedIn && user.role === "admin") {
           navigate("/admin-dashboard");

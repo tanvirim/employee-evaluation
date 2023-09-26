@@ -23,7 +23,7 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     registerUser(formData);
-
+   
     console.log("data" ,formData)
   };
 
