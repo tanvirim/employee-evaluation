@@ -13,7 +13,7 @@ function Register() {
     role: '',
   });
 
-  const { isLoading,  success, registerUser } = useRegister();
+  const { isLoading,  registerUser } = useRegister();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,7 +23,7 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     registerUser(formData);
-   
+    navigate('/login')
     console.log("data" ,formData)
   };
 
@@ -87,10 +87,6 @@ function Register() {
         <span>
             Already have an account? <Link to="/login">  Login here</Link>
           </span>{isLoading && <p>Loading...</p>}
-        {success && 
-        navigate('/login')
-        }
-        
       </form>
     </Container>
   );
