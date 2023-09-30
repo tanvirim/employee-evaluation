@@ -56,7 +56,7 @@ const PrivateRouteForRole = ({ children, role }) => {
     return children;
   } else {
     // Redirect to login if the user doesn't have the required role
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
 };
 
