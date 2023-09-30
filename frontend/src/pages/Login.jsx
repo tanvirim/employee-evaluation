@@ -2,11 +2,10 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useLogin from '../hooks/useLogin';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Login() {
   const user = JSON.parse(localStorage.getItem('data'));
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -19,6 +18,10 @@ function Login() {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleNavigate = (path) => {
+    window.location.href = path; // Use window.location to navigate
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     loginUser(formData);
@@ -27,11 +30,11 @@ function Login() {
   useEffect(() => {
     const navigateBasedOnRole = () => {
       if (isLoggedIn && user.role === 'admin') {
-        navigate('/admin-dashboard');
+        handleNavigate('/admin-dashboard');
       } else if (isLoggedIn && user.role === 'evaluator') {
-        navigate('/evaluator-dashboard');
+        handleNavigate('/evaluator-dashboard');
       } else if (isLoggedIn) {
-        navigate('/employee-dashboard');
+        handleNavigate('/employee-dashboard');
       }
     };
 

@@ -1,6 +1,6 @@
 
 import Logout from "../components/Logout"
-import ProgressList from "../components/Progress/progresslist"
+import ProgressList from "../components/progress/ProgressList"
 
 
 
