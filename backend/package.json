@@ -1,6 +1,6 @@
 {
   "proxy": "http://localhost:8080",
-  "name": "Employee evaluation",
+  "name": "employee-evaluation",
   "version": "1.0.0",
   "description": "expense tracker app",
   "main": "server.js",
