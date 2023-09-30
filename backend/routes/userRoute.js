@@ -1,5 +1,5 @@
 const express = require("express")
-const { loginController, registerController } = require("../controllers/userController")
+const { loginController, registerController, getAllAdmin, getAllEMployee, getAllEvaluator } = require("../controllers/userController")
 
 
 
@@ -14,5 +14,13 @@ router.post('/login',loginController)
 //POST || REGISTER
 router.post('/register',registerController )
 
-
+// Route to find all admins
+router.get('/all-admins', getAllAdmin);
+  
+  // Route to find all employees
+  router.get('/all-employees',getAllEMployee);
+  
+  // Route to find all evaluators
+  router.get('/all-evaluators',getAllEvaluator);
+  
 module.exports = router

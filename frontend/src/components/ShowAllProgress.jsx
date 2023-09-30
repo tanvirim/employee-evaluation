@@ -64,6 +64,7 @@ const AllProgress = () => {
       });
   }, []);
 
+  console.log(progressList)
   return (
     <Container>
       <Title>All Progress Entries</Title>
@@ -83,7 +84,7 @@ const AllProgress = () => {
               <TableCell>{progress.projectName}</TableCell>
               <TableCell>{progress.projectContribution}</TableCell>
               <TableCell>{progress.progressPercentage}</TableCell>
-              <TableCell>{progress.user}</TableCell>
+              <TableCell>{progress.userName}</TableCell>
             </TableRow>
           ))}
         </tbody>

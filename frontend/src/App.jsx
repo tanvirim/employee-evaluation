@@ -6,11 +6,13 @@ import EmployeeDashboard from './pages/EmployeeDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import EvaluatorDashboard from './pages/EvaluatorDashboard';
 import HomePage from './pages/HomePage';
+import { ToastContainer } from "react-toastify";
 
 function App() {
 
   return (
     <Router>
+       <ToastContainer position="bottom-right" />
       <Routes>
         <Route exact path="/" element={<HomePage/>}/>
         <Route exact path="/employee-dashboard" element={<ProtectedRouteForEmployee > <EmployeeDashboard/> </ProtectedRouteForEmployee>}/>

@@ -1,13 +1,16 @@
-import CreateProgressComponent from "../components/CreateProgress"
+
 import Logout from "../components/Logout"
-import ShowProgress from "../components/ShowProgress"
+import ProgressList from "../components/Progress/progresslist"
+
+
 
 
 const EmployeeDashboard = () => {
   return (
     <>
-    <CreateProgressComponent/>
-    <ShowProgress/>
+    
+   <ProgressList/>
+
     <Logout> <a >LogOut</a></Logout>
     </>
   )

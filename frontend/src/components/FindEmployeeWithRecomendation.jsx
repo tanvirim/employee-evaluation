@@ -1,6 +1,53 @@
-// RecommendedEmployeesTable.js
 import  { useState, useEffect } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
+
+// Create styled components for table elements
+const Container = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
+const Title = styled.h2`
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+`;
+
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+`;
+
+const TableHead = styled.thead`
+  background-color: #007bff;
+  color: #fff;
+`;
+
+const TableHeaderCell = styled.th`
+  padding: 10px;
+  text-align: left;
+`;
+
+const TableRow = styled.tr`
+  &:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+`;
+
+const TableCell = styled.td`
+  padding: 10px;
+`;
+
+const ErrorMessage = styled.p`
+  color: #ff0000;
+  font-size: 16px;
+  margin-top: 10px;
+`;
 
 const RecommendedEmployeesTable = () => {
   const [recommendedEmployees, setRecommendedEmployees] = useState([]);
@@ -19,28 +66,28 @@ const RecommendedEmployeesTable = () => {
   }, []);
 
   return (
-    <div>
-      <h2>Recommended Employees</h2>
-      {error && <p className="error">{error}</p>}
-      <table>
-        <thead>
-          <tr>
-            <th>Employee Name</th>
-            <th>Recommended for Increment</th>
-            <th>Recommended for Promotion</th>
-          </tr>
-        </thead>
+    <Container>
+      <Title>Recommended Employees</Title>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeaderCell>Employee Name</TableHeaderCell>
+            <TableHeaderCell>Recommended for Increment</TableHeaderCell>
+            <TableHeaderCell>Recommended for Promotion</TableHeaderCell>
+          </TableRow>
+        </TableHead>
         <tbody>
           {recommendedEmployees.map((employee) => (
-            <tr key={employee._id}>
-              <td>{employee.employeeName}</td>
-              <td>{employee.isRecommendedForIncrement ? 'Yes' : 'No'}</td>
-              <td>{employee.isRecommendedForPromotion ? 'Yes' : 'No'}</td>
-            </tr>
+            <TableRow key={employee._id}>
+              <TableCell>{employee.employeeName}</TableCell>
+              <TableCell>{employee.isRecommendedForIncrement ? 'Yes' : 'No'}</TableCell>
+              <TableCell>{employee.isRecommendedForPromotion ? 'Yes' : 'No'}</TableCell>
+            </TableRow>
           ))}
         </tbody>
-      </table>
-    </div>
+      </Table>
+    </Container>
   );
 };
 

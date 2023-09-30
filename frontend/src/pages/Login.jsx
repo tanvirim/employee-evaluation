@@ -1,18 +1,18 @@
-import { useEffect, useState} from 'react';
-
-import styled from "styled-components";
+/* eslint-disable react/no-unescaped-entities */
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import useLogin from '../hooks/useLogin';
-import { useNavigate ,Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Login() {
-const user = JSON.parse(localStorage.getItem("data"))
-  const navigate = useNavigate() ;
+  const user = JSON.parse(localStorage.getItem('data'));
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
 
-  const { isLoading, isLoggedIn, loginUser, } = useLogin();
+  const { isLoading, isLoggedIn, loginUser, error } = useLogin(); // Include 'error' from the useLogin hook.
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,33 +22,29 @@ const user = JSON.parse(localStorage.getItem("data"))
   const handleSubmit = (e) => {
     e.preventDefault();
     loginUser(formData);
+  };
 
+  useEffect(() => {
+    const navigateBasedOnRole = () => {
+      if (isLoggedIn && user.role === 'admin') {
+        navigate('/admin-dashboard');
+      } else if (isLoggedIn && user.role === 'evaluator') {
+        navigate('/evaluator-dashboard');
+      } else if (isLoggedIn) {
+        navigate('/employee-dashboard');
+      }
+    };
 
-  }
-    useEffect(() => {
-      
-      const navigateBasedOnRole = () => {
-        if (isLoggedIn && user.role === "admin") {
-          navigate("/admin-dashboard");
-        } else if (isLoggedIn && user.role === "evaluator") {
-          navigate("/evaluator-dashboard");
-        } else if (isLoggedIn) {
-          navigate("/employee-dashboard");
-        }
-      };
-    
-      navigateBasedOnRole();
-    },[user,isLoggedIn])
- 
- 
+    navigateBasedOnRole();
+  }, [user, isLoggedIn]);
 
   return (
     <Container>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-        <h1>Login Here</h1>
+          <h1>Login Here</h1>
           <input
-          placeholder='E-mail'
+            placeholder="E-mail"
             type="email"
             id="email"
             name="email"
@@ -58,9 +54,8 @@ const user = JSON.parse(localStorage.getItem("data"))
           />
         </div>
         <div className="form-group">
-        
           <input
-          placeholder='Password'
+            placeholder="Password"
             type="password"
             id="password"
             name="password"
@@ -74,8 +69,9 @@ const user = JSON.parse(localStorage.getItem("data"))
           {isLoading ? 'Logging in...' : 'Login'}
         </button>
         <span>
-            Dont have an account ? <Link to="/register">Create One.</Link>
-          </span>
+          {error && <ErrorMessage>{error}</ErrorMessage>} {/* Display the error message */}
+          Don't have an account? <Link to="/register">Create One.</Link>
+        </span>
       </form>
     </Container>
   );
@@ -83,8 +79,8 @@ const user = JSON.parse(localStorage.getItem("data"))
 
 export default Login;
 
-const Container = styled("div")`
- height: 100vh;
+const Container = styled('div')`
+  height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -93,13 +89,12 @@ const Container = styled("div")`
   align-items: center;
   background-color: #131324;
   h1 {
-    font-size:30px ;
-      color: #f7eeee;
-      padding: 10px;
-      
-    }
+    font-size: 30px;
+    color: #f7eeee;
+    padding: 10px;
+  }
   form {
-    color:white;
+    color: white;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -143,5 +138,10 @@ const Container = styled("div")`
       font-weight: bold;
     }
   }
+`;
 
+const ErrorMessage = styled.p`
+  color: #ff0000;
+  font-size: 16px;
+  margin-top: 10px;
 `;

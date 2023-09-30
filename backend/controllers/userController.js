@@ -84,4 +84,33 @@ const registerController = async (req, res) => {
 };
 
 
-module.exports = {loginController,registerController}
+const getAllAdmin = async (req, res) => {
+  try {
+    const allAdmins = await userModel.find({ role: 'admin' });
+    res.json(allAdmins);
+  } catch (error) {
+    console.error('Error fetching all admins:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+
+const getAllEMployee =  async (req, res) => {
+  try {
+    const allEmployees = await userModel.find({ role: 'employee' });
+    res.json(allEmployees);
+  } catch (error) {
+    console.error('Error fetching all employees:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+const getAllEvaluator =  async (req, res) => {
+  try {
+    const allEvaluators = await userModel.find({ role: 'evaluator' });
+    res.json(allEvaluators);
+  } catch (error) {
+    console.error('Error fetching all evaluators:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+module.exports = {loginController,registerController,getAllAdmin,getAllEMployee,getAllEvaluator}

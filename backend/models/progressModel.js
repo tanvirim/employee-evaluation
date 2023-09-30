@@ -22,6 +22,11 @@ const progressSchema = new mongoose.Schema({
     ref: 'User', 
     required: [true, 'User is required'],
   },
+  userName: {
+    type: String, 
+    required: [true, 'userName is required'],
+  },
+ 
 }, { timestamps: true });
 
 // Define the Progress model

@@ -1,4 +1,5 @@
-import AddEmployeeRecommendation from "../components/AddEmployeeRecom"
+
+import FindUsers from "../components/FindUsers"
 import Logout from "../components/Logout"
 import AllProgress from "../components/ShowAllProgress"
 
@@ -8,8 +9,10 @@ const AdminDashboard = () => {
   return (
     <div>
 
-      <AddEmployeeRecommendation/>
+   
       <AllProgress/>
+
+      <FindUsers/>
 
       <Logout/>
     </div>

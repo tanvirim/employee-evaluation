@@ -2,7 +2,7 @@ const employeeModel = require("../models/employeeModel");
 const Progress = require("../models/progressModel");
 const UserModel =require("../models/userModel")
 Employee = require("../models/employeeModel");
-const progressController = async (req, res) => {
+const addProgress = async (req, res) => {
     try {
       const progress = new Progress(req.body);
       await progress.save();
@@ -11,6 +11,10 @@ const progressController = async (req, res) => {
       res.status(400).json({ error: 'Failed to add progress' });
     }
   }
+
+
+  // Progress
+
 const getProgressByUserId = async (req, res) => {
   try {
     const { id } = req.params;
@@ -30,6 +34,21 @@ const getProgressByUserId = async (req, res) => {
   }
 };
 
+// delete progress by id 
+const deleteProgressById = async (req, res) => {
+  try {
+    const progress = await Progress.findByIdAndRemove(req.params.id);
+    if (!progress) {
+      return res.status(404).json({ message: 'Progress not found' });
+    }
+    res.status(200).json({ message: 'Progress deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting progress:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+//get all progress
 const getAllProgress = async (req, res) => {
   try {
     const allProgress = await Progress.find();
@@ -41,6 +60,23 @@ const getAllProgress = async (req, res) => {
   }
 };
 
+//delete all progress
+
+const deleteAllProgress = async (req, res) => {
+  try {
+   
+    await Progress.deleteMany({});
+    res.status(204).json({
+      success:true,
+      message:"deleted all progress"
+    }) 
+  } catch (error) {
+    console.error('Error deleting progress entries:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+//add employee recommendation
 const addEmployeeRecommendation = async (req, res) => {
   try {
     const { employeeName, isRecommendedForIncrement, isRecommendedForPromotion } = req.body;
@@ -59,8 +95,7 @@ const addEmployeeRecommendation = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while adding the employee recommendation.' });
   }
 };
-
-
+//
 const getEmployeeNames = async (req, res) => {
   try {
     const employeeNames = await UserModel.find({ role: 'employee' });
@@ -72,7 +107,6 @@ const getEmployeeNames = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while fetching employee names.' });
   }
 };
-
 
 const findEmployeesWithRecommendation = async (req, res) => {
   try {
@@ -91,4 +125,4 @@ const findEmployeesWithRecommendation = async (req, res) => {
 };
 
 
-  module.exports = {progressController ,getProgressByUserId , addEmployeeRecommendation , getEmployeeNames ,findEmployeesWithRecommendation ,getAllProgress};
+  module.exports = {deleteProgressById, deleteAllProgress,addProgress ,getProgressByUserId , addEmployeeRecommendation , getEmployeeNames ,findEmployeesWithRecommendation ,getAllProgress};
