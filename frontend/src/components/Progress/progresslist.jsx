@@ -17,7 +17,7 @@ function ProgressList() {
     try {
       const { id } = JSON.parse(localStorage.getItem("data"));
       const response = await axios.get(
-        `http://localhost:8080/api/v1/employee/progress/${id}`
+        `https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/employee/progress/${id}`
       );
       setProgress(response.data);
     } catch (error) {
@@ -49,7 +49,7 @@ function ProgressList() {
   const handleDelete = async (progressId) => {
     try {
       await axios.delete(
-        `http://localhost:8080/api/v1/employee/progress/${progressId}`
+        `https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/employee/progress/${progressId}`
       );
       // Update the frontend state after a successful delete operation
       setProgress((prevProgress) =>

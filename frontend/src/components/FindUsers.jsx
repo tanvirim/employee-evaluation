@@ -14,7 +14,7 @@ function FindUsers() {
     // Function to fetch admin users
     const fetchAdminUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/v1/users/all-admins'); // Adjust the API endpoint as needed
+        const response = await axios.get('https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/users/all-admins'); // Adjust the API endpoint as needed
         setAdminUsers(response.data);
       } catch (error) {
         console.error('Error fetching admin users:', error);
@@ -24,7 +24,7 @@ function FindUsers() {
     // Function to fetch employee users
     const fetchEmployeeUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/v1/users/all-employees'); // Adjust the API endpoint as needed
+        const response = await axios.get('https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/users/all-employees'); // Adjust the API endpoint as needed
         setEmployeeUsers(response.data);
       } catch (error) {
         console.error('Error fetching employee users:', error);
@@ -34,7 +34,7 @@ function FindUsers() {
     // Function to fetch evaluator users
     const fetchEvaluatorUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/v1/users/all-evaluators'); // Adjust the API endpoint as needed
+        const response = await axios.get('https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/users/all-evaluators'); // Adjust the API endpoint as needed
         setEvaluatorUsers(response.data);
       } catch (error) {
         console.error('Error fetching evaluator users:', error);

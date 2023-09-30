@@ -55,7 +55,7 @@ const RecommendedEmployeesTable = () => {
 
   useEffect(() => {
     // Fetch recommended employees from your API endpoint
-    axios.get('http://localhost:8080/api/v1/employee/recomended-employee')
+    axios.get('https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/employee/recomended-employee')
       .then((response) => {
         setRecommendedEmployees(response.data);
       })

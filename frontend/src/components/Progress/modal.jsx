@@ -65,12 +65,12 @@ function ProgressModal({ isOpen, onClose, progressToEdit }) {
 
       if (progressToEdit) {
         // If progressToEdit is provided, it's an edit operation (PUT request)
-        await axios.put(`http://localhost:8080/api/v1/employee/progress/${progressToEdit._id}`, progress);
+        await axios.put(`https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/employee/progress/${progressToEdit._id}`, progress);
         handleEditComplete(); // Mark editing as complete
         toast.success('Progress edited successfully.');
       } else {
         // If progressToEdit is not provided, it's an add operation (POST request)
-        await axios.post('http://localhost:8080/api/v1/employee/progress', progress);
+        await axios.post('https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/employee/progress', progress);
         toast.success('Progress added successfully.');
       }
       onClose();
