@@ -19,7 +19,7 @@ function Login() {
   };
 
   const handleNavigate = (path) => {
-    window.location.href = path; // Use window.location to navigate
+    window.location.href = path; 
   };
 
   const handleSubmit = (e) => {
