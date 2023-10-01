@@ -1,45 +1,62 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import useLogin from '../hooks/useLogin';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import styled from "styled-components";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 function Login() {
-  const user = JSON.parse(localStorage.getItem('data'));
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
-  const { isLoading, isLoggedIn, loginUser, error } = useLogin(); // Include 'error' from the useLogin hook.
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleNavigate = (path) => {
-    window.location.href = path; 
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    loginUser(formData);
+    setIsLoading(true);
+
+    try {
+      const response = await axios.post(
+        "https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/users/login",
+        formData
+      );
+
+      if (response.data.token) {
+        navigateBasedOnRole(response.data.token); // Navigate based on role
+      } else {
+        setError("Login failed. Please check your credentials.");
+      }
+    } catch (error) {
+      setError("An error occurred during login. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  useEffect(() => {
-    const navigateBasedOnRole = () => {
-      if (isLoggedIn && user.role === 'admin') {
-        handleNavigate('/admin-dashboard');
-      } else if (isLoggedIn && user.role === 'evaluator') {
-        handleNavigate('/evaluator-dashboard');
-      } else if (isLoggedIn) {
-        handleNavigate('/employee-dashboard');
-      }
-    };
+  const navigateBasedOnRole = (token) => {
+    const decodedToken = jwt_decode(token);
+    localStorage.setItem("data", JSON.stringify({ ...decodedToken }));
+    if (decodedToken && decodedToken.role) {
+      const role = decodedToken.role;
 
-    navigateBasedOnRole();
-  }, [user, isLoggedIn]);
+      if (role === "admin") {
+        navigate("/admin-dashboard");
+      } else if (role === "evaluator") {
+        navigate("/evaluator-dashboard");
+      } else {
+        navigate("/employee-dashboard");
+      }
+    }
+  };
 
   return (
     <Container>
@@ -69,10 +86,10 @@ function Login() {
         </div>
 
         <button type="submit" disabled={isLoading}>
-          {isLoading ? 'Logging in...' : 'Login'}
+          {isLoading ? "Logging in..." : "Login"}
         </button>
         <span>
-          {error && <ErrorMessage>{error}</ErrorMessage>} {/* Display the error message */}
+          {error && <ErrorMessage>{error}</ErrorMessage>}
           Don't have an account? <Link to="/register">Create One.</Link>
         </span>
       </form>
@@ -82,7 +99,7 @@ function Login() {
 
 export default Login;
 
-const Container = styled('div')`
+const Container = styled("div")`
   height: 100vh;
   width: 100vw;
   display: flex;

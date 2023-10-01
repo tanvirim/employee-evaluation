@@ -54,7 +54,7 @@ const AllProgress = () => {
 
   useEffect(() => {
     // Fetch all progress entries from your API endpoint
-    axios.get('http://localhost:8080/api/v1/employee/all-progress')
+    axios.get('https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/employee/all-progress')
       .then((response) => {
         setProgressList(response.data);
       })
