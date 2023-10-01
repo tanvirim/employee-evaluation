@@ -1,56 +1,58 @@
 /* eslint-disable react/prop-types */
-import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import Register from './pages/Register';
-import Login from './pages/Login';
-import EmployeeDashboard from './pages/EmployeeDashboard';
-import AdminDashboard from './pages/AdminDashboard';
-import EvaluatorDashboard from './pages/EvaluatorDashboard';
-import HomePage from './pages/HomePage';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import EmployeeDashboard from "./pages/EmployeeDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+import EvaluatorDashboard from "./pages/EvaluatorDashboard";
+import HomePage from "./pages/HomePage";
 function App() {
   return (
     <Router>
       <ToastContainer position="bottom-right" />
       <Routes>
-        <Route path="/" element={<Outlet />}>
-          {/* Nested routes for Register and Login */}
-          <Route path="register" element={<Register />} />
-          <Route path="login" element={<Login />} />
+        <Route path="/" element={<HomePage />} />
 
-          {/* private routes */}
-          <Route
-            path="employee-dashboard"
-            element={
-              <PrivateRouteForRole role="employee">
-                <EmployeeDashboard />
-              </PrivateRouteForRole>
-            }
-          />
-          <Route
-            path="admin-dashboard"
-            element={
-              <PrivateRouteForRole role="admin">
-                <AdminDashboard />
-              </PrivateRouteForRole>
-            }
-          />
-          <Route
-            path="evaluator-dashboard"
-            element={
-              <PrivateRouteForRole role="evaluator">
-                <EvaluatorDashboard />
-              </PrivateRouteForRole>
-            }
-          />
-          <Route path="/" element={<HomePage />} />
-        </Route>
+        <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
+
+        <Route
+          path="employee-dashboard"
+          element={
+            <PrivateRouteForRole role="employee">
+              <EmployeeDashboard />
+            </PrivateRouteForRole>
+          }
+        />
+        <Route
+          path="admin-dashboard"
+          element={
+            <PrivateRouteForRole role="admin">
+              <AdminDashboard />
+            </PrivateRouteForRole>
+          }
+        />
+        <Route
+          path="evaluator-dashboard"
+          element={
+            <PrivateRouteForRole role="evaluator">
+              <EvaluatorDashboard />
+            </PrivateRouteForRole>
+          }
+        />
       </Routes>
     </Router>
   );
 }
 
 const PrivateRouteForRole = ({ children, role }) => {
-  const userRole = JSON.parse(localStorage.getItem('data'))?.role;
+  const userRole = JSON.parse(localStorage.getItem("data"))?.role;
 
   if (userRole === role) {
     return children;
