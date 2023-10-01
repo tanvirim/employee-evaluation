@@ -2,7 +2,7 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+
 
 const LogoutButton = styled.button`
   background-color: #007bff;
@@ -24,15 +24,15 @@ const LogoutIcon = styled.span`
 `;
 
 const Logout = () => {
-  const navigate = useNavigate(); // Get the navigate function
+
 
   const handleLogout = () => {
     localStorage.removeItem("data");
-    navigate("/"); // Navigate to the homepage
+    
   };
 
   return (
-    <LogoutButton onClick={handleLogout}>
+    <LogoutButton href="/" onClick={handleLogout}>
       <LogoutIcon>
         <FontAwesomeIcon icon={faSignOutAlt} />
       </LogoutIcon>
