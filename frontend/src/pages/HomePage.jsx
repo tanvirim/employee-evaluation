@@ -57,7 +57,7 @@ const HomePage = () => {
         <HeroContent>
           <Title>Welcome to Employee Evaluation</Title>
           <Subtitle>Empowering Performance Assessment and Improvement</Subtitle>
-          <GetStartedButton to="/register">Get Started</GetStartedButton>
+          <GetStartedButton to="/login">Get Started</GetStartedButton>
         </HeroContent>
       </Hero>
     </Container>
