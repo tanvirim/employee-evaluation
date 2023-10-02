@@ -15,7 +15,7 @@ function ProgressModal({ isOpen, onClose, progressToEdit }) {
   const [progress, setProgress] = useState({
     projectName: '',
     projectContribution: '',
-    progressPercentage: 0,
+    progressPercentage: Number,
     user: id,
     userName: name
   });

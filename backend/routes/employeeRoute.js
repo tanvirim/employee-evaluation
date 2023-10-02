@@ -1,5 +1,5 @@
 const express = require("express")
-const {  getProgressByUserId, getEmployeeNames, addEmployeeRecommendation, getAllProgress, findEmployeesWithRecommendation, addProgress, deleteAllProgress, deleteProgressById } = require("../controllers/employeeController")
+const {  getProgressByUserId, addEmployeeRecommendation, getAllProgress, findEmployeesWithRecommendation, addProgress, deleteAllProgress, deleteProgressById, getAllEmployee } = require("../controllers/employeeController")
 const Progress = require("../models/progressModel")
 
 
@@ -26,8 +26,6 @@ router.put('/progress/:id', async (req, res) => {
 });
 
 router.delete('/progress/:id', deleteProgressById);
-
-router.get('/employee-names', getEmployeeNames)
 router.post('/employee-recommendation', addEmployeeRecommendation);
 router.route('/all-progress')
   .get(getAllProgress)

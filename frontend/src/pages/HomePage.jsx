@@ -1,7 +1,7 @@
 
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 // Styled components
 const Container = styled.div`
   display: flex;
@@ -37,6 +37,7 @@ const Subtitle = styled.p`
 
 const GetStartedButton = styled(Link)`
   display: inline-block;
+  margin-left:10px;
   padding: 10px 20px;
   background-color: #007bff;
   color: #fff;
@@ -51,13 +52,33 @@ const GetStartedButton = styled(Link)`
 `;
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const navigateBasedOnRole = () => {
+      const data = JSON.parse(localStorage.getItem('data'));
+      if (data && data.role) {
+        if (data.role === "admin") {
+          navigate("/admin-dashboard");
+        } else if (data.role === "evaluator") {
+          navigate("/evaluator-dashboard");
+        } else if (data.role === "employee") {
+          navigate("/employee-dashboard");
+        }
+      } 
+    };
+    navigateBasedOnRole();
+  }, []);
+
   return (
     <Container>
       <Hero>
         <HeroContent>
           <Title>Welcome to Employee Evaluation</Title>
           <Subtitle>Empowering Performance Assessment and Improvement</Subtitle>
-          <GetStartedButton to="/login">Get Started</GetStartedButton>
+          <Title>Get Started</Title>
+          <GetStartedButton to="/login">Login</GetStartedButton>
+          <GetStartedButton to="/Register">Register</GetStartedButton>
         </HeroContent>
       </Hero>
     </Container>

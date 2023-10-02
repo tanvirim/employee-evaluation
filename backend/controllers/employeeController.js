@@ -15,24 +15,31 @@ const addProgress = async (req, res) => {
 
   // Progress
 
-const getProgressByUserId = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    // Find progress data for the user ID
-    const progress = await Progress.find({ user: id });
-
-    if (!progress) {
-      return res.status(404).json({ error: 'Progress data not found' });
+  const getProgressByUserId = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { sort } = req.query;
+  
+      let sortOrder = 1; // Default: ascending order
+      if (sort === 'desc') {
+        sortOrder = -1; // Descending order
+      }
+  
+      // Find progress data for the user ID and apply sorting
+      const progress = await Progress.find({ user: id }).sort({ progressPercentage: sortOrder });
+  
+      if (!progress) {
+        return res.status(404).json({ error: 'Progress data not found' });
+      }
+  
+      res.json(progress);
+  
+    } catch (error) {
+      console.error('Error fetching progress data:', error);
+      res.status(500).json({ error: 'Internal server error' });
     }
-
-    res.json(progress);
-
-  } catch (error) {
-    console.error('Error fetching progress data:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-};
+  };
+  
 
 // delete progress by id 
 const deleteProgressById = async (req, res) => {
@@ -96,11 +103,11 @@ const addEmployeeRecommendation = async (req, res) => {
   }
 };
 //
-const getEmployeeNames = async (req, res) => {
+const getAllEmployee = async (req, res) => {
   try {
-    const employeeNames = await UserModel.find({ role: 'employee' });
+    const employee = await UserModel.find({ role: 'employee' });
 
-    res.json(employeeNames.map((user) => user.name));
+    res.json(employee);
   
   } catch (error) {
     console.error('Error fetching employee names:', error);
@@ -125,4 +132,4 @@ const findEmployeesWithRecommendation = async (req, res) => {
 };
 
 
-  module.exports = {deleteProgressById, deleteAllProgress,addProgress ,getProgressByUserId , addEmployeeRecommendation , getEmployeeNames ,findEmployeesWithRecommendation ,getAllProgress};
+  module.exports = {deleteProgressById, deleteAllProgress,addProgress ,getProgressByUserId , addEmployeeRecommendation , getAllEmployee ,findEmployeesWithRecommendation ,getAllProgress};

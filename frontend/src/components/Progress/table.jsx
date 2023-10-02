@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import styled from 'styled-components';
-
+import { BiArrowFromBottom ,BiArrowFromTop } from 'react-icons/bi'
 // Create styled components
 const Table = styled.table`
   width: 100%;
@@ -33,19 +33,22 @@ const Button = styled.button`
   margin-right: 5px;
 `;
 
-function ProgressListTable({ progress, openModalForEdit, handleDelete }) {
+function ProgressListTable({toggleSortOrder,sortOrder, progress, openModalForEdit, handleDelete }) {
   return (
     <Table>
       <thead>
         <tr>
           <TableHeader>Project Name</TableHeader>
           <TableHeader>Project Contribution</TableHeader>
-          <TableHeader>Progress Percentage</TableHeader>
+          <TableHeader>Progress Percentage
+            <button onClick={toggleSortOrder}>
+          {sortOrder === "asc" ? <BiArrowFromBottom size={30} /> : <BiArrowFromTop size={30}/>}
+        </button> </TableHeader>
           <TableHeader>Actions</TableHeader>
         </tr>
       </thead>
       <tbody>
-        {progress.map((progressEntry) => (
+        {progress?.map((progressEntry) => (
           <TableRow key={progressEntry._id}>
             <TableData>{progressEntry.projectName}</TableData>
             <TableData>{progressEntry.projectContribution}</TableData>

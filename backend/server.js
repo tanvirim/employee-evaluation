@@ -3,7 +3,7 @@ const cors = require("cors")
 const dotenv = require("dotenv") 
 const connectDB = require("./config/connectDB")
 const userRoutes = require("./routes/userRoute")
-const progressRoute = require("./routes/employeeRoute")
+const employeeRoutes = require("./routes/employeeRoute")
 // const path = require("path")
 
 
@@ -26,7 +26,7 @@ app.use(cors())
 
 //routes
 app.use('/api/v1/users', userRoutes)
-app.use('/api/v1/employee', progressRoute)
+app.use('/api/v1/employee', employeeRoutes)
 
 
 //static

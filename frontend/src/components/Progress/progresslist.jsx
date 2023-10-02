@@ -1,33 +1,32 @@
-// ProgressList.js
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import axios from "axios";
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProgressModal from "./modal";
 import ProgressListTable from "./table";
 
-
-function ProgressList() {
+function ProgressList({id}) {
   const [progress, setProgress] = useState([]);
   const [isProgressModalOpen, setIsProgressModalOpen] = useState(false);
   const [progressToEdit, setProgressToEdit] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc"); 
 
-
-  const fetchProgress = async () => { 
+  const fetchProgress = async () => {
     try {
-      const { id } = JSON.parse(localStorage.getItem("data"));
+      
       const response = await axios.get(
-        `https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/employee/progress/${id}`
+        ` http://localhost:8080/api/v1/employee/progress/${id}?sort=${sortOrder}`
       );
       setProgress(response.data);
     } catch (error) {
       console.error("Error fetching progress:", error);
     }
-  }
+  };
 
   useEffect(() => {
     fetchProgress();
-  }, []);
+  }, [sortOrder ,id]); // Re-fetch progress when sortOrder changes
 
   const openModalForEdit = (progressEntry) => {
     setIsProgressModalOpen(true);
@@ -51,6 +50,7 @@ function ProgressList() {
       await axios.delete(
         `https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/employee/progress/${progressId}`
       );
+
       // Update the frontend state after a successful delete operation
       setProgress((prevProgress) =>
         prevProgress.filter((entry) => entry._id !== progressId)
@@ -62,10 +62,21 @@ function ProgressList() {
     }
   };
 
+  const toggleSortOrder = () => {
+    // Toggle between ascending and descending order
+    setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
+  };
+ 
+ 
   return (
     <>
-      <button onClick={openModalForAdd}>Add Progress</button>
+      <div>
+        <button onClick={openModalForAdd}>Add Progress</button>
+
+      </div>
       <ProgressListTable
+      toggleSortOrder={toggleSortOrder}
+      sortOrder={sortOrder}
         progress={progress}
         openModalForEdit={openModalForEdit}
         handleDelete={handleDelete}
@@ -75,8 +86,8 @@ function ProgressList() {
         onClose={handleModalClose}
         progressToEdit={progressToEdit}
       />
-     
     </>
-  )
+  );
 }
+
 export default ProgressList;
