@@ -1,16 +1,12 @@
-import RecommendedEmployeesTable from "../components/FindEmployeeWithRecomendation"
-import Layout from "../components/Layout"
-
-
+import RecommendedEmployeesTable from './FindEmployeeWithRecomendation';
+import Layout from '../components/Layout';
 
 const EvaluatorDashboard = () => {
   return (
-   <Layout>
+    <Layout>
+      <RecommendedEmployeesTable />
+    </Layout>
+  );
+};
 
-     <RecommendedEmployeesTable/>
-   </Layout>
-
-  )
-}
-
-export default EvaluatorDashboard
+export default EvaluatorDashboard;

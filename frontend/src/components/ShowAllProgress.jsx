@@ -1,6 +1,7 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import { ApiUrl } from '../constants';
 
 const Container = styled.div`
   max-width: 800px;
@@ -54,17 +55,18 @@ const AllProgress = () => {
 
   useEffect(() => {
     // Fetch all progress entries from your API endpoint
-    axios.get('https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/employee/all-progress')
+    axios
+      .get(`${ApiUrl}/employee/all-progress`)
       .then((response) => {
         setProgressList(response.data);
       })
       .catch((error) => {
         setError('Error fetching progress entries.');
-        console.log(error)
+        console.log(error);
       });
   }, []);
 
-  console.log(progressList)
+  console.log(progressList);
   return (
     <Container>
       <Title>All Progress Entries</Title>

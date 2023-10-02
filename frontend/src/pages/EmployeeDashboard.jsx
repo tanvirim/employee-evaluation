@@ -1,18 +1,14 @@
+import Layout from '../components/Layout';
 
-import Layout from "../components/Layout";
-
-import ProgressList from "../components/progress/progresslist"
+import ProgressList from '../components/progress/progresslist';
 
 const EmployeeDashboard = () => {
-  const { id } = JSON.parse(localStorage.getItem("data"));
+  const { id } = JSON.parse(localStorage.getItem('data'));
   return (
-    
     <Layout>
-    <ProgressList id={id}/>
-
+      <ProgressList className='h-screen' id={id} />
     </Layout>
-   
-  )
-}
+  );
+};
 
-export default EmployeeDashboard
+export default EmployeeDashboard;

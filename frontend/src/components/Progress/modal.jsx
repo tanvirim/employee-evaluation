@@ -1,19 +1,21 @@
 /* eslint-disable react/prop-types */
 // ProgressModal.js
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { ModalWrapper, ModalContent } from "./styles.modal"; // Import the styled components
-import {GiTireIronCross} from 'react-icons/gi'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ModalWrapper, ModalContent } from './styles.modal'; // Import the styled components
+import { GiTireIronCross } from 'react-icons/gi';
+import { ApiUrl } from '../../constants'; // Import the ApiUrl constant
+
 function ProgressModal({ isOpen, onClose, progressToEdit }) {
   const [editingComplete, setEditingComplete] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { id, name } = JSON.parse(localStorage.getItem("data"));
+  const { id, name } = JSON.parse(localStorage.getItem('data'));
 
   const [progress, setProgress] = useState({
-    projectName: "",
-    projectContribution: "",
+    projectName: '',
+    projectContribution: '',
     progressPercentage: Number,
     user: id,
     userName: name,
@@ -26,8 +28,8 @@ function ProgressModal({ isOpen, onClose, progressToEdit }) {
     } else {
       // If progressToEdit is not provided, reset the modal for adding
       setProgress({
-        projectName: "",
-        projectContribution: "",
+        projectName: '',
+        projectContribution: '',
         progressPercentage: 0,
         user: id,
         userName: name,
@@ -61,7 +63,7 @@ function ProgressModal({ isOpen, onClose, progressToEdit }) {
         !progress.progressPercentage
       ) {
         // Show a Toastify error notification if required fields are empty
-        toast.error("Please fill in all required fields.");
+        toast.error('Please fill in all required fields.');
         setIsLoading(false); // Reset loading state
         return;
       }
@@ -69,23 +71,23 @@ function ProgressModal({ isOpen, onClose, progressToEdit }) {
       if (progressToEdit) {
         // If progressToEdit is provided, it's an edit operation (PUT request)
         await axios.put(
-          `https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/employee/progress/${progressToEdit._id}`,
+          `${ApiUrl}/employee/progress/${progressToEdit._id}`, // Use ApiUrl here
           progress
         );
         handleEditComplete(); // Mark editing as complete
-        toast.success("Progress edited successfully.");
+        toast.success('Progress edited successfully.');
       } else {
         // If progressToEdit is not provided, it's an add operation (POST request)
         await axios.post(
-          "https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/employee/progress",
+          `${ApiUrl}/employee/progress`, // Use ApiUrl here
           progress
         );
-        toast.success("Progress added successfully.");
+        toast.success('Progress added successfully.');
       }
       onClose();
     } catch (error) {
-      console.error("Error:", error);
-      toast.error("An error occurred. Please try again later.");
+      console.error('Error:', error);
+      toast.error('An error occurred. Please try again later.');
     } finally {
       setIsLoading(false); // Reset loading state regardless of success or failure.
     }
@@ -93,45 +95,49 @@ function ProgressModal({ isOpen, onClose, progressToEdit }) {
 
   return (
     <ModalWrapper isOpen={isOpen}>
-      <ModalContent className="modal-content  ">
-        <span className="close" onClick={onClose}>
-          <GiTireIronCross/>
+      <ModalContent className='modal-content  '>
+        <span className='close' onClick={onClose}>
+          <GiTireIronCross />
         </span>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
+          <div className='form-group'>
             <label>Project Name:</label>
             <input
-              type="text"
-              name="projectName"
+              type='text'
+              name='projectName'
               value={progress.projectName}
               onChange={handleInputChange}
               required
             />
           </div>
-          <div className="form-group">
+          <div className='form-group'>
             <label>Project Contribution:</label>
             <textarea
-              name="projectContribution"
+              name='projectContribution'
               value={progress.projectContribution}
               onChange={handleInputChange}
               required
             />
           </div>
-          <div className="form-group">
+          <div className='form-group'>
             <label>Progress Percentage:</label>
             <input
-              type="number"
-              name="progressPercentage"
+              type='number'
+              name='progressPercentage'
               value={progress.progressPercentage}
               onChange={handleInputChange}
               required
             />
           </div>
-          <section className="button-group">
-            <button className="save-button" type="submit" disabled={isLoading}>
-              {isLoading ? "Saving..." : "Save"}
+          <section className='button-group'>
+            <button className='save-button' type='submit' disabled={isLoading}>
+              {isLoading ? 'Saving...' : 'Save'}
             </button>
-            <button className="cancel-button" onClick={handleCancel} disabled={isLoading}>
+            <button
+              className='cancel-button'
+              onClick={handleCancel}
+              disabled={isLoading}
+            >
               Cancel
             </button>
           </section>

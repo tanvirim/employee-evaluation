@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ApiUrl } from '../constants';
 
 function useRegister() {
   const [isLoading, setIsLoading] = useState(false);
@@ -11,7 +12,7 @@ function useRegister() {
     setSuccess(false);
 
     try {
-      const response = await fetch('https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/users/register', {
+      const response = await fetch(`${ApiUrl}/users/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

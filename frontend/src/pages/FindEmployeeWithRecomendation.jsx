@@ -1,6 +1,7 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import { ApiUrl } from '../constants';
 
 // Create styled components for table elements
 const Container = styled.div`
@@ -55,7 +56,8 @@ const RecommendedEmployeesTable = () => {
 
   useEffect(() => {
     // Fetch recommended employees from your API endpoint
-    axios.get('https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/employee/recomended-employee')
+    axios
+      .get(`${ApiUrl}/employee/recomended-employee`)
       .then((response) => {
         setRecommendedEmployees(response.data);
       })
@@ -67,7 +69,9 @@ const RecommendedEmployeesTable = () => {
 
   return (
     <Container>
-      <Title>Recommended Employees</Title>
+      <Title className='text-2xl text-center font-bold text-slate-600 mb-4'>
+        Recommended Employees
+      </Title>
       {error && <ErrorMessage>{error}</ErrorMessage>}
       <Table>
         <TableHead>
@@ -81,8 +85,12 @@ const RecommendedEmployeesTable = () => {
           {recommendedEmployees.map((employee) => (
             <TableRow key={employee._id}>
               <TableCell>{employee.employeeName}</TableCell>
-              <TableCell>{employee.isRecommendedForIncrement ? 'Yes' : 'No'}</TableCell>
-              <TableCell>{employee.isRecommendedForPromotion ? 'Yes' : 'No'}</TableCell>
+              <TableCell>
+                {employee.isRecommendedForIncrement ? 'Yes' : 'No'}
+              </TableCell>
+              <TableCell>
+                {employee.isRecommendedForPromotion ? 'Yes' : 'No'}
+              </TableCell>
             </TableRow>
           ))}
         </tbody>

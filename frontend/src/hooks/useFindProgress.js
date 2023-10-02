@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { ApiUrl } from '../constants';
 function useFindProgresdById(id) {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -8,10 +8,10 @@ function useFindProgresdById(id) {
 
   useEffect(() => {
     // Define the URL with the provided ID
-    const apiUrl = `https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/employee/progress/${id}`;
+    const apiUrlhere = `${ApiUrl}employee/progress/${id}`;
     // Fetch data from the API using Axios
     axios
-      .get(apiUrl)
+      .get(apiUrlhere)
       .then((response) => {
         setData(response.data);
         setIsLoading(false);

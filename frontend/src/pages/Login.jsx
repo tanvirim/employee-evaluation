@@ -1,15 +1,16 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useState } from "react";
-import styled from "styled-components";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import { useState } from 'react';
+import styled from 'styled-components';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
+import { ApiUrl } from '../constants';
 
 function Login() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -25,18 +26,15 @@ function Login() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(
-        "https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/users/login",
-        formData
-      );
+      const response = await axios.post(`${ApiUrl}/users/login`, formData);
 
       if (response.data.token) {
         navigateBasedOnRole(response.data.token); // Navigate based on role
       } else {
-        setError("Login failed. Please check your credentials.");
+        setError('Login failed. Please check your credentials.');
       }
     } catch (error) {
-      setError("An error occurred during login. Please try again later.");
+      setError('An error occurred during login. Please try again later.');
     } finally {
       setIsLoading(false);
     }
@@ -44,16 +42,16 @@ function Login() {
 
   const navigateBasedOnRole = (token) => {
     const decodedToken = jwt_decode(token);
-    localStorage.setItem("data", JSON.stringify({ ...decodedToken }));
+    localStorage.setItem('data', JSON.stringify({ ...decodedToken }));
     if (decodedToken && decodedToken.role) {
       const role = decodedToken.role;
 
-      if (role === "admin") {
-        navigate("/admin-dashboard");
-      } else if (role === "evaluator") {
-        navigate("/evaluator-dashboard");
+      if (role === 'admin') {
+        navigate('/admin-dashboard');
+      } else if (role === 'evaluator') {
+        navigate('/evaluator-dashboard');
       } else {
-        navigate("/employee-dashboard");
+        navigate('/employee-dashboard');
       }
     }
   };
@@ -61,36 +59,36 @@ function Login() {
   return (
     <Container>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
+        <div className='form-group'>
           <h1>Login Here</h1>
           <input
-            placeholder="E-mail"
-            type="email"
-            id="email"
-            name="email"
+            placeholder='E-mail'
+            type='email'
+            id='email'
+            name='email'
             value={formData.email}
             onChange={handleChange}
             required
           />
         </div>
-        <div className="form-group">
+        <div className='form-group'>
           <input
-            placeholder="Password"
-            type="password"
-            id="password"
-            name="password"
+            placeholder='Password'
+            type='password'
+            id='password'
+            name='password'
             value={formData.password}
             onChange={handleChange}
             required
           />
         </div>
 
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? "Logging in..." : "Login"}
+        <button type='submit' disabled={isLoading}>
+          {isLoading ? 'Logging in...' : 'Login'}
         </button>
         <span>
           {error && <ErrorMessage>{error}</ErrorMessage>}
-          Don't have an account? <Link to="/register">Create One.</Link>
+          Don't have an account? <Link to='/register'>Create One.</Link>
         </span>
       </form>
     </Container>
@@ -99,7 +97,7 @@ function Login() {
 
 export default Login;
 
-const Container = styled("div")`
+const Container = styled('div')`
   height: 100vh;
   width: 100vw;
   display: flex;
