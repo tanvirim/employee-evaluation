@@ -83,25 +83,25 @@ const deleteAllProgress = async (req, res) => {
   }
 }
 
-//add employee recommendation
-const addEmployeeRecommendation = async (req, res) => {
-  try {
-    const { employeeName, isRecommendedForIncrement, isRecommendedForPromotion } = req.body;
+  //add employee recommendation
+  const addEmployeeRecommendation = async (req, res) => {
+    try {
+      const { employeeName, isRecommendedForIncrement, isRecommendedForPromotion } = req.body;
 
-    const newEmployee = new employeeModel({
-      employeeName,
-      isRecommendedForIncrement,
-      isRecommendedForPromotion,
-    });
+      const newEmployee = new employeeModel({
+        employeeName,
+        isRecommendedForIncrement,
+        isRecommendedForPromotion,
+      });
 
-    await newEmployee.save();
+      await newEmployee.save();
 
-    res.status(201).json(newEmployee);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'An error occurred while adding the employee recommendation.' });
-  }
-};
+      res.status(201).json(newEmployee);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred while adding the employee recommendation.' });
+    }
+  };
 //
 const getAllEmployee = async (req, res) => {
   try {

@@ -31,6 +31,10 @@ const Button = styled.button`
   padding: 5px 10px;
   cursor: pointer;
   margin-right: 5px;
+  &hover {
+    background-color: ${(props) => (props.edit ? "#ffffff" : "#ffffff")};
+    color: ${(props) => (props.edit ? "#007bff" : "#e80000")};
+  }
 `;
 
 function ProgressListTable({
@@ -73,7 +77,7 @@ function ProgressListTable({
             <TableData>{progressEntry.projectContribution}</TableData>
             <TableData>{progressEntry.progressPercentage}%</TableData>
             <TableData>
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2">
                 { role == "employee" ? <Button edit onClick={() => openModalForEdit(progressEntry)}>
                   Edit
                 </Button> : ""}

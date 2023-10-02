@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useRegister from '../hooks/useRegister';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 function Register() {
+  const navigate =useNavigate()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -11,7 +12,7 @@ function Register() {
     role: '',
   });
 
-  const { isLoading, registerUser } = useRegister();
+  const { isLoading, registerUser,success } = useRegister();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,7 +22,14 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     registerUser(formData);
+
   };
+
+  useEffect(()=>{
+    if(success){
+      navigate('/login')
+    }}
+  ,[success])
 
   return (
     <Container>

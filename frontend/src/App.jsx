@@ -12,6 +12,7 @@ import EmployeeDashboard from "./pages/EmployeeDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import EvaluatorDashboard from "./pages/EvaluatorDashboard";
 import HomePage from "./pages/HomePage";
+import Profile from "./pages/Profile";
 function App() {
   return (
     <Router>
@@ -22,6 +23,12 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
 
+        <Route 
+          path="profile"
+          exact
+          element={ <Profile/>}
+          
+        />
         <Route 
           path="employee-dashboard"
           exact

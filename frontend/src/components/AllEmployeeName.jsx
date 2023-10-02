@@ -2,9 +2,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function AllEmployees({ onSelectEmployee }) {
+function AllEmployeesName({ onSelectEmployeeName }) {
   const [employeeUsers, setEmployeeUsers] = useState([]);
-  const [selectedEmployeeId, setSelectedEmployeeId] = useState('');
+  const [selectedEmployeeName, setSelectedEmployeeName] = useState('');
 
   useEffect(() => {
     // Function to fetch employee users
@@ -21,22 +21,21 @@ function AllEmployees({ onSelectEmployee }) {
   }, []);
 
   const handleEmployeeSelect = (event) => {
-    const selectedId = event.target.value;
+    const selectedName = event.target.value;
 
-    console.log("id",selectedId)
-    setSelectedEmployeeId(selectedId);
+    setSelectedEmployeeName(selectedName);
 
     // Call the callback function to send the selectedEmployeeId to the parent
-    onSelectEmployee(selectedId);
+    onSelectEmployeeName(selectedName);
   };
 
   return (
     <div>
       <label>Select an employee:</label>
-      <select onChange={handleEmployeeSelect} value={selectedEmployeeId}>
+      <select onChange={handleEmployeeSelect} value={selectedEmployeeName}>
         <option value="">Select an employee</option>
         {employeeUsers.map((employee) => (
-          <option key={employee.id} value={employee._id}>
+          <option key={employee.id} value={employee.name}>
             {employee.name}
           </option>
         ))}
@@ -45,4 +44,4 @@ function AllEmployees({ onSelectEmployee }) {
   );
 }
 
-export default AllEmployees;
+export default AllEmployeesName;
