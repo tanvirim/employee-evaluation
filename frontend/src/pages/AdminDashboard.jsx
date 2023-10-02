@@ -2,8 +2,8 @@
 import { useState } from "react";
 import AllEmployees from "../components/AllEmployee";
 import FindUsers from "../components/FindUsers"
-import Logout from "../components/Logout"
 import ProgressList from "../components/progress/progresslist"
+import Layout from "../components/Layout";
 // import AllProgress from "../components/progress/ShowAllProgress"
 
 
@@ -15,9 +15,8 @@ const AdminDashboard = () => {
   const handleEmployeeSelect = (employeeId) => {
     setSelectedEmployeeId(employeeId);}
   return (
-    <div>
-  
-   
+ 
+   <Layout>
 
      <AllEmployees onSelectEmployee={handleEmployeeSelect}/>
 
@@ -25,8 +24,9 @@ const AdminDashboard = () => {
 
       <FindUsers/>
 
-      <Logout/>
-    </div>
+   </Layout>
+   
+
   )
 }
 

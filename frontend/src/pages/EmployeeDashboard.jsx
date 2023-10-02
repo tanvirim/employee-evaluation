@@ -1,14 +1,17 @@
 
-import Logout from "../components/Logout"
+import Layout from "../components/Layout";
+
 import ProgressList from "../components/progress/progresslist"
 
 const EmployeeDashboard = () => {
   const { id } = JSON.parse(localStorage.getItem("data"));
   return (
-    <>
+    
+    <Layout>
     <ProgressList id={id}/>
-    <Logout> <a >LogOut</a></Logout>
-    </>
+
+    </Layout>
+   
   )
 }
 

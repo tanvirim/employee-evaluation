@@ -4,6 +4,7 @@ import {
   UserListContainer,
   UserGroup,
 } from '../styles/FindUsers.styles.js'; // Import your styled components
+import { toast } from 'react-toastify';
 
 function FindUsers() {
   const [adminUsers, setAdminUsers] = useState([]);
@@ -24,7 +25,7 @@ function FindUsers() {
     // Function to fetch employee users
     const fetchEmployeeUsers = async () => {
       try {
-        const response = await axios.get('https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/users/all-employees'); // Adjust the API endpoint as needed
+        const response = await axios.get('http://localhost:8080/api/v1/users/all-employees'); // Adjust the API endpoint as needed
         setEmployeeUsers(response.data);
       } catch (error) {
         console.error('Error fetching employee users:', error);
@@ -47,6 +48,23 @@ function FindUsers() {
     fetchEvaluatorUsers();
   }, []);
 
+  const handleDelete = async (userId) => {
+    try {
+      await axios.delete(
+        `https://employee-evaluation-tanvir-mitul.onrender.com/api/v1/employee/progress/${userId}`
+      );
+
+      // Update the frontend state after a successful delete operation
+      setEmployeeUsers((prevUser) =>
+        prevUser.filter((entry) => entry._id !== userId)
+      );
+      toast.success("Progress deleted successfully.");
+    } catch (error) {
+      console.error("Error deleting progress:", error);
+      toast.error("An error occurred while deleting progress.");
+    }
+  };
+
   return (
     <UserListContainer>
       <UserGroup>
@@ -62,7 +80,11 @@ function FindUsers() {
         <h2>Employee Users</h2>
         <ul>
           {employeeUsers.map((user) => (
-            <li key={user._id}>{user.name}</li>
+            <>
+            <li key={user._id}>{user.name} </li>
+            <button onClick={() => handleDelete(user._id)}>Delete</button>
+            </>
+            
           ))}
         </ul>
       </UserGroup>

@@ -7,6 +7,7 @@ import ProgressModal from "./modal";
 import ProgressListTable from "./table";
 
 function ProgressList({id}) {
+  const { role } = JSON.parse(localStorage.getItem("data"));
   const [progress, setProgress] = useState([]);
   const [isProgressModalOpen, setIsProgressModalOpen] = useState(false);
   const [progressToEdit, setProgressToEdit] = useState(null);
@@ -69,24 +70,24 @@ function ProgressList({id}) {
  
  
   return (
-    <>
-      <div>
-        <button onClick={openModalForAdd}>Add Progress</button>
+  
+    <div >
 
-      </div>
+       {role == "employee" ? <button className=" text-2xl bg-green-600 text-white px-3 py-2 rounded-md  mt-5 hover:bg-green-500" onClick={openModalForAdd}>Add Progress</button> : "" } 
       <ProgressListTable
       toggleSortOrder={toggleSortOrder}
       sortOrder={sortOrder}
-        progress={progress}
+      progress={progress}
         openModalForEdit={openModalForEdit}
         handleDelete={handleDelete}
-      />
+        />
       <ProgressModal
         isOpen={isProgressModalOpen}
         onClose={handleModalClose}
         progressToEdit={progressToEdit}
-      />
-    </>
+        />
+        </div>
+    
   );
 }
 

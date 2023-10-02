@@ -1,13 +1,15 @@
 import RecommendedEmployeesTable from "../components/FindEmployeeWithRecomendation"
-import Logout from "../components/Logout"
+import Layout from "../components/Layout"
+
 
 
 const EvaluatorDashboard = () => {
   return (
-    <div>
-    <RecommendedEmployeesTable/>
-     <Logout/>
-    </div>
+   <Layout>
+
+     <RecommendedEmployeesTable/>
+   </Layout>
+
   )
 }
 

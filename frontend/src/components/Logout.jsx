@@ -6,17 +6,17 @@ import { Link } from "react-router-dom";
 
 
 const LogoutButton = styled.button`
-  background-color: #007bff;
+  background-color: #de2707;
   color: #fff;
   border: none;
   border-radius: 4px;
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 5px 10px;
+  font-size: 12px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #ff3737;
   }
 `;
 

@@ -22,8 +22,9 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
 
-        <Route
+        <Route 
           path="employee-dashboard"
+          exact
           element={
             <PrivateRouteForRole role="employee">
               <EmployeeDashboard />

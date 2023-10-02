@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 //Login callback
-const loginController = async (req, res) => {
+export const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await userModel.findOne({ email });
@@ -43,7 +43,7 @@ const loginController = async (req, res) => {
 
 //Register callback
 
-const registerController = async (req, res) => {
+export const registerController = async (req, res) => {
   try {
     const { email, password, name,role } = req.body;
 
@@ -84,7 +84,7 @@ const registerController = async (req, res) => {
 };
 
 
-const getAllAdmin = async (req, res) => {
+export const getAllAdmin = async (req, res) => {
   try {
     const allAdmins = await userModel.find({ role: 'admin' });
     res.json(allAdmins);
@@ -95,7 +95,7 @@ const getAllAdmin = async (req, res) => {
 }
 
 
-const getAllEMployee =  async (req, res) => {
+export const getAllEMployee =  async (req, res) => {
   try {
     const allEmployees = await userModel.find({ role: 'employee' });
     res.json(allEmployees);
@@ -104,7 +104,36 @@ const getAllEMployee =  async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 }
-const getAllEvaluator =  async (req, res) => {
+
+  export const deleteEmployeeById =  async (req, res) => {
+    try {
+      const { id } = req.params;
+  
+      // Find the employee by ID
+      const employeeToDelete = await userModel.findById(id);
+  
+      if (!employeeToDelete) {
+        return res.status(404).json({ error: 'Employee not found' });
+      }
+  
+      // Check if the employee has the 'employee' role
+      if (employeeToDelete.role !== 'employee') {
+        return res.status(400).json({ error: 'This user is not an employee' });
+      }
+  
+      // Delete the employee
+      await userModel.findByIdAndDelete(id);
+  
+      res.json({ message: 'Employee deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting employee:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+
+
+export const getAllEvaluator =  async (req, res) => {
   try {
     const allEvaluators = await userModel.find({ role: 'evaluator' });
     res.json(allEvaluators);
@@ -112,5 +141,4 @@ const getAllEvaluator =  async (req, res) => {
     console.error('Error fetching all evaluators:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-}
-module.exports = {loginController,registerController,getAllAdmin,getAllEMployee,getAllEvaluator}
+} 
