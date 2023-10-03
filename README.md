@@ -15,5 +15,5 @@ Frontend: React with JavaScript
 UI: Tailwind CSS
 Deployment: render , netlify.
 
-<img src="./frontend/src/assets/employee.jpg" alt="Alt text" width="200" height="1500">
-<img src="./frontend/src/assets/login.jpg" alt="Alt text" width="200" height="1500">
+<img src="./frontend/src/assets/employee.jpg" alt="Alt text" width="300" height="400">
+<img src="./frontend/src/assets/login.jpg" alt="Alt text" width="300" height="400">
