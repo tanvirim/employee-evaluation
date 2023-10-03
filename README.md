@@ -15,6 +15,6 @@ Frontend: React with JavaScript
 UI: Tailwind CSS
 Deployment: render , netlify.
 
-![Alt text](1696310210959.jpg)
+<img src="1696310210959.jpg" alt="Alt text" width="400" height="300">
 
 ![image](1696310210242.jpg)
